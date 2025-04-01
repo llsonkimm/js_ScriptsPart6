@@ -30,3 +30,22 @@ new Promise((_, reject) => reject(new Error("Fail")))
         if (power > 50) break;
         console.log(power);
     }
+
+    // The event loop
+
+// No matter how closely together events—such as timeouts or incoming requests—happen, a JavaScript environment will run only one program at a time.
+
+// This example sets a timeout but then dallies until after the timeout’s intended point of time, causing the timeout to be late.
+
+let start = Date.now();
+setTimeout(() => {
+    console.log("Timeout ran at", Date.now() - start);
+}, 20);
+
+while (Date.now() < start + 50) {}
+console.log("Wasted time until ", Date.now() - start);
+
+// Promises always resolve or reject as a new event. Even if a promise is already resolved, waiting for it will cause your callback to run after the current script finishes, rather than right away.
+
+Promise.resolve("Done").then(console.log);
+console.log("Me first!");
